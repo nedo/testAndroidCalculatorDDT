@@ -93,7 +93,7 @@ public void getTestData()
 	Log.i("DDT","starting reading contents");
 	FileInputStream fs = null;
 		try {				
-			fs = new FileInputStream("sdcard/Data.csv");
+			fs = new FileInputStream("sdcard/DDTData.csv");
 			readTestData(fs);
 			
 		} catch (IOException ioe) {
