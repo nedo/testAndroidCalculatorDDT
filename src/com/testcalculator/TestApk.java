@@ -52,7 +52,7 @@ static{
 }
 
 public TestApk()throws ClassNotFoundException{
-super(TARGET_PACKAGE_ID,launcherActivityClass);
+super(launcherActivityClass);
 }
 
 private Solo solo;
@@ -90,24 +90,27 @@ public void testDisplayBlackBox() {
 //-------------------------------Work with TestData ---------------------------------------//
 public void getTestData()
 {
+	Log.i("DDT","starting reading contents");
 	FileInputStream fs = null;
-	try {		
-			fs = getActivity().openFileInput("TestData.csv");	
+		try {				
+			fs = new FileInputStream("sdcard/Data.csv");
 			readTestData(fs);
 			
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		finally {
 			try {
-				fs.close();
+				if(fs != null)
+					fs.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}	
 }
+
 
 public void readTestData(InputStream fileInputStream) throws Exception {
 	ws = null;
@@ -129,17 +132,17 @@ public void readTestData(InputStream fileInputStream) throws Exception {
 			 
 				if (!workbook.getSheet(0).getName().equals(firstSheet))
 				{
-					System.out.println ("contents are not fine");
+					Log.i("DDT","contents are not fine");
 				}
 				
 				if (!workbook.getSheet(1).getName().equals(secondSheet))
 				{
-					System.out.println ("contents are not fine");
+					Log.i("DDT","contents are not fine");
 				}			 
 			}
 		
 		else 
-			System.out.println ("There is not any sheet available.");
+			Log.i("DDT","There is not any sheet available.");
 	
 		s = workbook.getSheet(1);
 		
@@ -172,13 +175,13 @@ public void readTestData(InputStream fileInputStream) throws Exception {
 						}
 						else 
 						{
-							System.out.println("We will skip "+rowData[1].getContents());
+							Log.i("DDT","We will skip "+rowData[1].getContents());
 						}
 				}
-			//	System.out.println("Read Data is "+vFirstValue[i]+" "+vSecondValue[i]+" "+vExpectedValue[i]+" "+vExecute[i]);	
+			//	Log.i("DDT","Read Data is "+vFirstValue[i]+" "+vSecondValue[i]+" "+vExpectedValue[i]+" "+vExecute[i]);	
 			}
 			
-			System.out.println("Success");			
+			Log.i("DDT","Success");			
 
 		}			
 		workbook.close();			
